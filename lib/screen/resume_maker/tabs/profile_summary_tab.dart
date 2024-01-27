@@ -10,7 +10,7 @@ class ProfileSummaryTab extends StatefulWidget {
 }
 
 class _ProfileSummaryTabState extends State<ProfileSummaryTab> {
-  TextEditingController _summaryController;
+  late TextEditingController _summaryController;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -63,7 +63,11 @@ class _ProfileSummaryTabState extends State<ProfileSummaryTab> {
                   hintText: 'Your summary',
                   maxLines: 10,
                   inputBorder: OutlineInputBorder(),
-                  validator: (val) => val.length == 0 ? 'Empty summary' : val.length < 2 ? 'Invalid summary' : null,
+                  validator: (val) => val!.length == 0 ? 'Empty summary' : val.length < 2 ? 'Invalid summary' : null,
+                  textInputType: TextInputType.text,
+                  inputFormatter: [],
+                  maxLength: 10,
+                  readOnly: false,
                 ),
               ),
               SizedBox(
@@ -72,10 +76,10 @@ class _ProfileSummaryTabState extends State<ProfileSummaryTab> {
               StreamBuilder<bool>(
                   stream: _bloc.saveProfileSummaryButtonEnableStream,
                   builder: (context, snapshot) {
-                    bool isEnable = snapshot.hasData ? snapshot.data : _bloc.profileSummary != null ? false : true;
+                    bool? isEnable = snapshot.hasData ? snapshot.data : _bloc.profileSummary != null ? false : true;
                     return RoundedButton(
                       text: 'Save',
-                      onPressed: isEnable ? _onAddProfileSummary : null,
+                      onPressed: _onAddProfileSummary,
                     );
                   }),
             ],
@@ -88,8 +92,8 @@ class _ProfileSummaryTabState extends State<ProfileSummaryTab> {
   void _onAddProfileSummary() {
     FocusScope.of(context).requestFocus(new FocusNode());
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _bloc.profileSummary = _summaryController.text;
       _bloc.saveProfileSummaryButtonEnableSink.add(false);
       _bloc.nextButtonEnableSink.add(true);

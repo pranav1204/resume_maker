@@ -5,8 +5,7 @@ class DotsIndicator extends StatelessWidget {
 	final int position;
 
 	const DotsIndicator({
-		Key key,
-		@required this.dotsCount,
+		required this.dotsCount,
 		this.position = 0,
 	})  : assert(dotsCount != null && dotsCount > 0),
 				assert(position != null && position >= 0),
@@ -14,7 +13,7 @@ class DotsIndicator extends StatelessWidget {
 				position < dotsCount,
 				"Position must be inferior than dotsCount",
 				),
-				super(key: key);
+				super();
 
 	Widget _buildDot(int index) {
 		final isCurrent = index == position;

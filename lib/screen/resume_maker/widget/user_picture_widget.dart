@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,7 +50,7 @@ class UserPictureWidget extends StatelessWidget {
     return StreamBuilder<double>(
         stream: _bloc.mainPagerStream,
         builder: (BuildContext buildContext, AsyncSnapshot<double> snapshot) {
-          double pageOffset = snapshot.hasData ? snapshot.data : 0.0;
+          double pageOffset = snapshot.hasData ? snapshot.data!.toDouble() : 0.0;
           return Transform.scale(
             scale: _getScaleOffset(pageOffset),
             child: Transform.translate(
@@ -94,19 +93,23 @@ class UserPictureWidget extends StatelessWidget {
   }
 
   Future getImage(ResumeMakerBloc _bloc) async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    File croppedFile = await ImageCropper.cropImage(
-      sourcePath: image.path,
-      toolbarTitle: 'Crop',
-      toolbarColor: Colors.blue,
-      toolbarWidgetColor: Colors.white,
-      ratioX: 1.0,
-      ratioY: 1.0,
+    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    CroppedFile? croppedFile =
+    await ImageCropper().cropImage(
+      sourcePath: image!.path,
       maxWidth: 512,
       maxHeight: 512,
+      aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Crop',
+          toolbarColor: Colors.blue,
+          toolbarWidgetColor: Colors.white,
+        )
+      ]
     );
-    _bloc.userImage = croppedFile;
-    _bloc.pictureClickSink.add(croppedFile);
+     _bloc.userImage = croppedFile as File;
+    _bloc.pictureClickSink.add(croppedFile as File);
     _bloc.saveProfileButtonEnableSink.add(true);
     _bloc.nextButtonEnableSink.add(false);
   }

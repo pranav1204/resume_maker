@@ -4,7 +4,7 @@ import 'package:resumepad/utility/color_utility.dart';
 class OnBoardingHeaderText extends StatelessWidget {
   final String text;
 
-  const OnBoardingHeaderText({@required this.text});
+  const OnBoardingHeaderText({required this.text});
 
   @override
   Widget build(BuildContext context) {

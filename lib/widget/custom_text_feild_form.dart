@@ -7,7 +7,7 @@ class CustomTextFieldForm extends StatelessWidget {
   final String hintText;
   final String helperText;
   final TextInputType textInputType;
-  final Function validator;
+  final String? Function(String?)? validator;
   final int maxLines;
   final InputBorder inputBorder;
   final List<TextInputFormatter> inputFormatter;
@@ -42,15 +42,14 @@ class CustomTextFieldForm extends StatelessWidget {
     );
   }
 
-  CustomTextFieldForm(
-      {@required this.controller,
-      @required this.helperText,
-      @required this.hintText,
-      this.textInputType,
-      this.validator,
-      this.maxLines,
-      this.inputBorder,
-      this.inputFormatter,
-      this.maxLength,
-      this.readOnly});
+  CustomTextFieldForm({
+      required this.helperText,
+      required this.hintText,
+      required this.textInputType,
+      required this.validator,
+      required this.maxLines,
+      required this.inputBorder,
+      required this.inputFormatter,
+      required this.maxLength,
+      required this.readOnly, required this.controller});
 }

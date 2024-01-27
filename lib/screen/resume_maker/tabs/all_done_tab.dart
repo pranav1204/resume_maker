@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:resumepad/screen/preview_resume/preview_resume_page.dart';
@@ -38,7 +36,7 @@ class AllDoneTab extends StatelessWidget {
             builder: (context, snapshot) {
               var isButtonVisible = snapshot.hasData ? snapshot.data : true;
 
-              return isButtonVisible
+              return isButtonVisible!
                   ? RoundedButton(
                       text: 'See Preview',
                       onPressed: () => _createFile(context),
@@ -64,7 +62,7 @@ class AllDoneTab extends StatelessWidget {
     final _bloc = ResumeMakerBlocProvider.of(context);
     _bloc.previewButtonVisibilitySink.add(false);
     _bloc.createPdf().then((val) {
-      _previewPdfFile(context, _bloc.profile.name);
+      _previewPdfFile(context, _bloc.profile.name as String);
     });
   }
 

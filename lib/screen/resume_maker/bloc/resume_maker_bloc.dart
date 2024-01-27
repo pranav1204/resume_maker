@@ -9,16 +9,16 @@ import 'package:rxdart/rxdart.dart';
 class ResumeMakerBloc {
   //String to store navigationId
   int currentPage = NAVIGATE_TO_PROFILE_TAB;
-  List<Education> educationList = List();
-  List<Experience> experienceList = List();
-  List<Project> projectList = List();
-  List<String> skillList = List();
-  List<Reference> referenceList = List();
-  List<Language> languageList = List();
-  Profile profile;
-  File userImage;
-  String profileSummary;
-  Contact contact;
+  List<Education> educationList = List as List<Education>;
+  List<Experience> experienceList = List as List<Experience>;
+  List<Project> projectList = List as List<Project>;
+  List<String> skillList = List as List<String>;
+  List<Reference> referenceList = List as List<Reference>;
+  List<Language> languageList = List as List<Language>;
+  late Profile profile;
+  late File userImage;
+  late String profileSummary;
+  late Contact contact;
 
   final _mainPagerBehaviorSubject = PublishSubject<double>();
 

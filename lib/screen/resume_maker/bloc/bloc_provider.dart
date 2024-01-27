@@ -6,15 +6,14 @@ class ResumeMakerBlocProvider extends InheritedWidget {
   final ResumeMakerBloc bloc;
 
   const ResumeMakerBlocProvider({
-    Key key,
-    @required this.bloc,
-    Widget child,
-  }) : super(key: key, child: child);
+    required this.bloc,
+    required Widget child,
+  }) : super( child: child);
 
   @override
   bool updateShouldNotify(_) => true;
 
   static ResumeMakerBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(ResumeMakerBlocProvider) as ResumeMakerBlocProvider).bloc;
+    return (context.dependOnInheritedWidgetOfExactType<ResumeMakerBlocProvider>() as ResumeMakerBlocProvider).bloc;
   }
 }

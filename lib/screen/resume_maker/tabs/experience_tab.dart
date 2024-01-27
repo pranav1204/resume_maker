@@ -41,7 +41,7 @@ class _ExperienceTabState extends State<ExperienceTab> {
                       child: IconButton(
                         padding: EdgeInsets.all(4),
                         color: Colors.white,
-                        onPressed: () => _showAddExperienceDialog(null, 0),
+                        onPressed: () => _showAddExperienceDialog(Experience(), 0),
                         icon: const Icon(Icons.add),
                       )),
                 ),
@@ -82,7 +82,7 @@ class _ExperienceTabState extends State<ExperienceTab> {
   }
 
   Future _showAddExperienceDialog(Experience tempExperience, int index) async {
-    Experience experience = await Navigator.of(context).push(
+    Experience? experience = await Navigator.of(context).push(
       MaterialPageRoute<Experience>(
           builder: (BuildContext context) {
             return AddExperienceDialog(
@@ -108,9 +108,9 @@ class _ExperienceTabState extends State<ExperienceTab> {
 
 class _ExperienceCard extends StatelessWidget {
   final Experience experience;
-  final Function onTap;
+  final VoidCallback onTap;
 
-  _ExperienceCard({@required this.experience, this.onTap});
+  _ExperienceCard({required this.experience, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +156,7 @@ class _ExperienceCard extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  experience != null ? experience.summary : '',
+                  experience != null ? experience.summary as String : '',
                   style: TextStyle(
                       color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                       fontSize: MediaQuery.of(context).size.shortestSide * 0.04,
@@ -171,7 +171,7 @@ class _ExperienceCard extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(
-                      '${DateFormat.yMMM().format(experience.startDate)} - ',
+                      '${DateFormat.yMMM().format(experience.startDate as DateTime)} - ',
                       style: TextStyle(
                           color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                           fontSize: MediaQuery.of(context).size.shortestSide * 0.03,
@@ -180,7 +180,7 @@ class _ExperienceCard extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                     Text(
-	                    experience.endDate.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(experience.endDate),
+	                    experience.endDate!.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(experience.endDate as DateTime),
                       style: TextStyle(
                           color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                           fontSize: MediaQuery.of(context).size.shortestSide * 0.03,

@@ -7,10 +7,10 @@ class CountryCode {
   String dialCode;
 
   CountryCode({
-    this.name,
-    this.flagUri,
-    this.code,
-    this.dialCode,
+    required this.name,
+    required this.flagUri,
+    required this.code,
+    required this.dialCode,
   });
 
   @override
@@ -276,8 +276,8 @@ class SelectionDialog extends StatefulWidget {
 }
 
 class _SelectionDialogState extends State<SelectionDialog> {
-  List<CountryCode> countryList;
-  List<CountryCode> filteredElements;
+  late List<CountryCode> countryList;
+  late List<CountryCode> filteredElements;
 
   @override
   void initState() {

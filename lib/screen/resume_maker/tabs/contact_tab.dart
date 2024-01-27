@@ -23,16 +23,16 @@ class _ContactTabState extends State<ContactTab> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final _bloc = ResumeMakerBlocProvider.of(context);
-    _emailController.text = _bloc.contact != null ? _bloc.contact.email : _emailController.text;
+    _emailController.text = (_bloc.contact != null ? _bloc.contact.email : _emailController.text)!;
     _emailController..addListener(_onEmailChange);
 
-    _phoneController.text = _bloc.contact != null ? _bloc.contact.phone : _phoneController.text;
+    _phoneController.text = (_bloc.contact != null ? _bloc.contact.phone : _phoneController.text)!;
     _phoneController..addListener(_onPhoneChange);
 
-    _linkedController.text = _bloc.contact != null ? _bloc.contact.linkedin : _linkedController.text;
+    _linkedController.text = (_bloc.contact != null ? _bloc.contact.linkedin : _linkedController.text)!;
     _linkedController..addListener(_onLinkedInChange);
 
-    _codeController.text = _bloc.contact != null ? _bloc.contact.countryCode : _codeController.text;
+    _codeController.text = (_bloc.contact != null ? _bloc.contact.countryCode : _codeController.text)!;
     _codeController..addListener(_onCodeChnage);
   }
 
@@ -101,14 +101,17 @@ class _ContactTabState extends State<ContactTab> {
                   helperText: 'Your email',
                   textInputType: TextInputType.emailAddress,
                   validator: (val) {
-                    Pattern pattern =
-                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                    RegExp regex = new RegExp(pattern);
-                    if (!regex.hasMatch(val))
+                    RegExp regex = new RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                    if (!regex.hasMatch(val!))
                       return 'Enter Valid Email';
                     else
                       return null;
                   },
+                  maxLines: 10,
+                  inputBorder: InputBorder.none,
+                  inputFormatter: [],
+                  maxLength: 10,
+                  readOnly: false,
                 ),
               ),
               Row(
@@ -128,7 +131,10 @@ class _ContactTabState extends State<ContactTab> {
                             maxLength: 8,
                             textInputType: TextInputType.phone,
                             readOnly: true,
-                            validator: (val) => val.length == 0 ? 'Code' : null,
+                            validator: (val) => val!.length == 0 ? 'Code' : null,
+                            maxLines: 10,
+                            inputBorder: InputBorder.none,
+                            inputFormatter: []
                           ),
                         ),
                       ),
@@ -143,10 +149,15 @@ class _ContactTabState extends State<ContactTab> {
                           helperText: 'Your mobile number',
                           textInputType: TextInputType.phone,
                           validator: (val) =>
-                              val.length == 0 ? 'Empty mobile number' : val.length < 9 ? 'Invalid mobile number' : null,
+                              val!.length == 0 ? 'Empty mobile number' : val.length < 9 ? 'Invalid mobile number' : null,
                           inputFormatter: [
                             LengthLimitingTextInputFormatter(10),
-                          ]),
+                          ],
+                        maxLines: 10,
+                        inputBorder: InputBorder.none,
+                        maxLength: 10,
+                        readOnly: false,
+                      ),
                     ),
                   ),
                 ],
@@ -157,7 +168,13 @@ class _ContactTabState extends State<ContactTab> {
                   controller: _linkedController,
                   hintText: 'Enter your LinkedIn profile',
                   helperText: 'Your LinkedIn',
-                  validator: (val) => val.length == 0 ? 'Empty link' : null,
+                  validator: (val) => val!.length == 0 ? 'Empty link' : null,
+                  textInputType: TextInputType.url,
+                  maxLines: 10,
+                  inputBorder: InputBorder.none,
+                  inputFormatter: [],
+                  maxLength: 10,
+                  readOnly: false,
                 ),
               ),
               SizedBox(
@@ -166,10 +183,10 @@ class _ContactTabState extends State<ContactTab> {
               StreamBuilder<bool>(
                   stream: _bloc.saveContactButtonEnableStream,
                   builder: (context, snapshot) {
-                    bool isEnable = snapshot.hasData ? snapshot.data : _bloc.contact != null ? false : true;
+                    bool? isEnable = snapshot.hasData ? snapshot.data : _bloc.contact != null ? false : true;
                     return RoundedButton(
                       text: 'Save',
-                      onPressed: isEnable ? _onAddContact : null,
+                      onPressed: _onAddContact,
                     );
                   }),
             ],
@@ -182,8 +199,8 @@ class _ContactTabState extends State<ContactTab> {
   void _onAddContact() {
     FocusScope.of(context).requestFocus(new FocusNode());
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _bloc.contact = Contact(
           email: _emailController.text,
           phone: _phoneController.text,

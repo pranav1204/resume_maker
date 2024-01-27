@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -9,10 +8,10 @@ import 'package:resumepad/model/resume_model.dart';
 
 getPdf(Resume resume) async {
   final Document pdf = Document();
-  final img = ImageLibrary.decodeImage(File("${resume.profile.imagePath}").readAsBytesSync());
+  final img = ImageLibrary.decodeImage(File("${resume.profile!.imagePath}").readAsBytesSync());
   final image = PdfImage(
     pdf.document,
-    image: img.data.buffer.asUint8List(),
+    image: img!.data!.buffer.asUint8List(),
     width: img.width,
     height: img.height,
   );
@@ -33,18 +32,18 @@ getPdf(Resume resume) async {
                 style: Theme.of(context).header5.copyWith(color: PdfColors.blue),
               ),
             ),
-            destination: experience.companyLink),
+            destination: experience.companyLink as String),
         SizedBox(height: 1),
         Row(
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              child: Text(experience.designation, style: Theme.of(context).paragraphStyle),
+              child: Text(experience.designation as String, style: Theme.of(context).paragraphStyle),
             ),
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                  '${DateFormat.yMMM().format(experience.startDate)} - ${experience.endDate.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(experience.endDate)}',
+                  '${DateFormat.yMMM().format(experience.startDate as DateTime)} - ${experience.endDate!.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(experience.endDate as DateTime)}',
                   style: Theme.of(context).paragraphStyle),
             ),
           ],
@@ -62,8 +61,8 @@ getPdf(Resume resume) async {
       ],),);
 
   List<Widget> _buildExperienceList(Context context) {
-    List<Widget> experienceWidgetList = List();
-    resume.experiences.forEach((item) {
+    List<Widget> experienceWidgetList = List as List<Widget>;
+    resume.experiences!.forEach((item) {
       experienceWidgetList.add(getExperienceItem(context, item));
     });
 
@@ -104,20 +103,20 @@ getPdf(Resume resume) async {
                 style: Theme.of(context).header5.copyWith(color: PdfColors.blue),
               ),
             ),
-            destination: education.collegeLink),
+            destination: education.collegeLink as String),
         SizedBox(height: 1),
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            '${DateFormat.yMMM().format(education.startDate)} - ${education.endDate.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(education.endDate)}',
+            '${DateFormat.yMMM().format(education.startDate as DateTime)} - ${education.endDate!.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(education.endDate as DateTime)}',
             style: Theme.of(context).paragraphStyle,
           ),
         ),
       ]));
 
   List<Widget> _buildEducationList(Context context) {
-    List<Widget> widgetList = List();
-    resume.educations.forEach((item) {
+    List<Widget> widgetList = List as List<Widget>;
+    resume.educations!.forEach((item) {
       widgetList.add(getEducationItem(context, item));
     });
 
@@ -146,16 +145,16 @@ getPdf(Resume resume) async {
             child: Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                project.projectName,
+                project.projectName as String,
                 style: Theme.of(context).header5.copyWith(color: PdfColors.blue),
               ),
             ),
-            destination: project.projectLink),
+            destination: project.projectLink as String),
         SizedBox(height: 1),
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            '${DateFormat.yMMM().format(project.startDate)} - ${project.endDate.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(project.endDate)}',
+            '${DateFormat.yMMM().format(project.startDate as DateTime)} - ${project.endDate!.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(project.endDate as DateTime)}',
             style: Theme.of(context).paragraphStyle,
           ),
         ),
@@ -163,7 +162,7 @@ getPdf(Resume resume) async {
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            project.projectSummary,
+            project.projectSummary as String,
             textAlign: TextAlign.justify,
             style: Theme.of(context).tableCell,
           ),
@@ -171,8 +170,8 @@ getPdf(Resume resume) async {
       ]));
 
   List<Widget> _buildProjectList(Context context) {
-    List<Widget> widgetList = List();
-    resume.projects.forEach((item) {
+    List<Widget> widgetList = List as List<Widget>;
+    resume.projects!.forEach((item) {
       widgetList.add(getProjectItem(context, item));
     });
 
@@ -200,7 +199,7 @@ getPdf(Resume resume) async {
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            reference.name,
+            reference.name as String,
             style: Theme.of(context).header5,
           ),
         ),
@@ -223,8 +222,8 @@ getPdf(Resume resume) async {
       ]));
 
   List<Widget> _buildReferenceList(Context context) {
-    List<Widget> widgetList = List();
-    resume.references.forEach((item) {
+    List<Widget> widgetList = List as List<Widget>;
+    resume.references!.forEach((item) {
       widgetList.add(getReferenceItem(context, item));
     });
 
@@ -259,8 +258,8 @@ getPdf(Resume resume) async {
       ));
 
   List<Widget> _buildSkillList(Context context) {
-    List<Widget> widgetList = List();
-    resume.skills.forEach((item) {
+    List<Widget> widgetList = List as List<Widget>;
+    resume.skills!.forEach((item) {
       widgetList.add(getSkillsItem(context, item));
     });
 
@@ -307,8 +306,8 @@ getPdf(Resume resume) async {
       ));
 
   List<Widget> _buildLanguageList(Context context) {
-    List<Widget> widgetList = List();
-    resume.languages.forEach((item) {
+    List<Widget> widgetList = List as List<Widget>;
+    resume.languages!.forEach((item) {
       widgetList.add(getLanguageItem(context, item));
     });
 
@@ -346,7 +345,7 @@ getPdf(Resume resume) async {
             Padding(
               padding: EdgeInsets.only(left: 8, right: 8, bottom: 4),
               child: Text(
-                '${resume.profile.currentCityAndCountry}',
+                '${resume.profile!.currentCityAndCountry}',
                 style: Theme.of(context).bulletStyle,
               ),
             ),
@@ -354,7 +353,7 @@ getPdf(Resume resume) async {
             Padding(
               padding: EdgeInsets.only(left: 8, right: 8, bottom: 4),
               child: Text(
-                '${resume.contact.countryCode} ${resume.contact.phone}',
+                '${resume.contact!.countryCode} ${resume.contact!.phone}',
                 style: Theme.of(context).bulletStyle,
               ),
             ),
@@ -362,7 +361,7 @@ getPdf(Resume resume) async {
             Padding(
               padding: EdgeInsets.only(left: 8, right: 8, bottom: 4),
               child: Text(
-                '${resume.contact.email}',
+                '${resume.contact!.email}',
                 style: Theme.of(context).bulletStyle,
               ),
             ),
@@ -377,7 +376,7 @@ getPdf(Resume resume) async {
                       style: Theme.of(context).bulletStyle.copyWith(color: PdfColors.blue),
                     ),
                   ),
-                  destination: resume.contact.linkedin),
+                  destination: resume.contact!.linkedin as String),
             ),
           ]);
 
@@ -427,7 +426,6 @@ getPdf(Resume resume) async {
         width: pageHeight * 0.125,
         height: pageHeight * 0.125,
         decoration: BoxDecoration(
-          image: DecorationImage(image: image),
           shape: BoxShape.circle,
         ),
       ),
@@ -454,7 +452,7 @@ getPdf(Resume resume) async {
             Padding(
               padding: EdgeInsets.only(left: 8, right: 8, bottom: 4),
               child: Text(
-                resume.profileSummary,
+                resume.profileSummary as String,
                 style: Theme.of(context).tableCell,
                 softWrap: true,
               ),
@@ -478,14 +476,14 @@ getPdf(Resume resume) async {
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  resume.profile.name,
+                  resume.profile!.name as String,
                   style: Theme.of(context).header2,
                 ),
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  resume.profile.designation,
+                  resume.profile!.designation as String,
                   style: Theme.of(context).header5,
                 ),
               ),
@@ -515,6 +513,6 @@ getPdf(Resume resume) async {
   );
 
   final path = await getApplicationDocumentsDirectory();
-  final file = File("${path.path}/${resume.profile.name.replaceAll(' ', '_')}.pdf");
-  file.writeAsBytesSync(pdf.save());
+  final file = File("${path.path}/${resume.profile!.name!.replaceAll(' ', '_')}.pdf");
+  file.writeAsBytesSync(pdf.save() as List<int>);
 }

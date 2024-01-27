@@ -3,22 +3,21 @@ import 'package:resumepad/model/resume_model.dart';
 import 'package:resumepad/screen/add_language/bloc/add_language_bloc.dart';
 import 'package:resumepad/widget/custom_text_feild_form.dart';
 import 'package:resumepad/widget/rounded_button.dart';
-
 import 'bloc/bloc_provider.dart';
 
 class AddLanguageDialog extends StatefulWidget {
   final Language language;
 
-  AddLanguageDialog({this.language});
+  AddLanguageDialog({required this.language});
 
   @override
   _AddLanguageDialogState createState() => _AddLanguageDialogState();
 }
 
 class _AddLanguageDialogState extends State<AddLanguageDialog> {
-  TextEditingController _nameController;
+  late TextEditingController _nameController;
   final _formKey = GlobalKey<FormState>();
-  AddLanguageBloc _bloc;
+  late AddLanguageBloc _bloc;
 
   @override
   void initState() {
@@ -70,16 +69,22 @@ class _AddLanguageDialogState extends State<AddLanguageDialog> {
                 controller: _nameController,
                 hintText: 'You speak ...',
                 helperText: 'Language name',
-                validator: (val) => val.length == 0 ? 'Empty name' : null,
+                validator: (val) => val!.length == 0 ? 'Empty name' : null,
+                textInputType: TextInputType.text,
+                maxLines: 2,
+                inputBorder: InputBorder.none,
+                inputFormatter: [],
+                maxLength: 10,
+                readOnly: false,
               ),
               SizedBox(height: 24.0),
               StreamBuilder<double>(
                   stream: _bloc.levelSliderStream,
                   builder: (context, snapshot) {
-                    double level = snapshot.hasData ? snapshot.data : 0;
+                    double? level = snapshot.hasData ? snapshot.data : 0;
                     return Slider(
                         label: 'Level',
-                        value: level,
+                        value: level as double,
                         onChanged: (value) {
                           _bloc.levelSliderSink.add(value);
                           _bloc.level = value;
@@ -90,9 +95,9 @@ class _AddLanguageDialogState extends State<AddLanguageDialog> {
                 child: StreamBuilder<double>(
                     stream: _bloc.levelSliderStream,
                     builder: (context, snapshot) {
-                      double level = snapshot.hasData ? snapshot.data : 0;
+                      double? level = snapshot.hasData ? snapshot.data : 0;
                       return Text(
-                        _getLanguageLevel(level * 100),
+                        _getLanguageLevel(level! * 100),
                         textAlign: TextAlign.center,
                       );
                     }),
@@ -111,8 +116,8 @@ class _AddLanguageDialogState extends State<AddLanguageDialog> {
 
   void onAddLanguage() {
     FocusScope.of(context).requestFocus(new FocusNode());
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
       Navigator.of(context).pop(
         Language(

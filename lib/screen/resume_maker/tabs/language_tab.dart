@@ -44,7 +44,7 @@ class _LanguageTabState extends State<LanguageTab> {
                       child: IconButton(
                         padding: EdgeInsets.all(4),
                         color: Colors.white,
-                        onPressed: () => _showAddLanguageDialog(null, 0),
+                        onPressed: () => _showAddLanguageDialog(Language(), 0),
                         icon: const Icon(Icons.add),
                       )),
                 ),
@@ -87,7 +87,7 @@ class _LanguageTabState extends State<LanguageTab> {
   }
 
   Future _showAddLanguageDialog(Language tempLanguage, int index) async {
-    Language language = await Navigator.of(context).push(
+    Language? language = await Navigator.of(context).push(
       MaterialPageRoute<Language>(
           builder: (BuildContext context) {
             return AddLanguageDialog(
@@ -113,11 +113,11 @@ class _LanguageTabState extends State<LanguageTab> {
 
 class _LanguageCard extends StatelessWidget {
   final Language language;
-  final Function onTap;
+  final VoidCallback onTap;
 
   _LanguageCard({
-    @required this.language,
-    @required this.onTap,
+    required this.language,
+    required this.onTap,
   });
 
   @override
@@ -166,7 +166,7 @@ class _LanguageCard extends StatelessWidget {
                     height: 4,
                   ),
                   Text(
-                    language != null ? language.level : '',
+                    language != null ? language.level as String : '',
                     style: TextStyle(
                         color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                         fontSize: MediaQuery.of(context).size.shortestSide * 0.04,

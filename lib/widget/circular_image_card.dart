@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CircularImageCard extends StatelessWidget {
-  CircularImageCard({@required this.image, @required this.scale});
+  CircularImageCard({required this.image, required this.scale});
 
   final String image;
   final double scale;

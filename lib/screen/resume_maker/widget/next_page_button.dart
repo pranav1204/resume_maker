@@ -11,7 +11,7 @@ class NextPageButton extends StatelessWidget {
       child: StreamBuilder<double>(
           stream: _bloc.mainPagerStream,
           builder: (BuildContext buildContext, AsyncSnapshot<double> snapshot) {
-            double pageOffset = snapshot.hasData ? snapshot.data : 0.0;
+            double pageOffset = snapshot.hasData ? snapshot.data!.toDouble() : 0.0;
             return Transform.translate(
               offset: Offset(_getXOffset(pageOffset, MediaQuery.of(context).size.width), 0),
               child: ClipOval(
@@ -22,7 +22,7 @@ class NextPageButton extends StatelessWidget {
                       return Container(
                           height: 32,
                           width: 32,
-                          color: isEnable ? Theme.of(context).primaryColor : Colors.grey,
+                          color: isEnable !? Theme.of(context).primaryColor : Colors.grey,
                           child: IconButton(
                             padding: EdgeInsets.all(4),
                             color: Colors.white,

@@ -1,8 +1,8 @@
 class Profile {
-  String name;
-  String designation;
-  String imagePath;
-  String currentCityAndCountry;
+  String? name;
+  String? designation;
+  String? imagePath;
+  String? currentCityAndCountry;
 
   Profile({
     this.name,
@@ -27,10 +27,10 @@ class Profile {
 }
 
 class Contact {
-  String email;
-  String phone;
-  String countryCode;
-  String linkedin;
+  String? email;
+  String? phone;
+  String? countryCode;
+  String? linkedin;
 
   Contact({
     this.email,
@@ -55,12 +55,12 @@ class Contact {
 }
 
 class Experience {
-  String companyName;
-  String designation;
-  DateTime startDate;
-  DateTime endDate;
-  String summary;
-  String companyLink;
+  String? companyName;
+  String? designation;
+  DateTime? startDate;
+  DateTime? endDate;
+  String? summary;
+  String? companyLink;
 
   Experience({
     this.companyName,
@@ -91,11 +91,11 @@ class Experience {
 }
 
 class Project {
-  String projectName;
-  DateTime startDate;
-  DateTime endDate;
-  String projectSummary;
-  String projectLink;
+  String? projectName;
+  DateTime? startDate;
+  DateTime? endDate;
+  String? projectSummary;
+  String? projectLink;
 
   Project({
     this.projectName,
@@ -123,12 +123,12 @@ class Project {
 }
 
 class Course {
-  String courseName;
-  DateTime startDate;
-  DateTime endDate;
-  String courseSummary;
-  String courseLink;
-  bool status;
+  String? courseName;
+  DateTime? startDate;
+  DateTime? endDate;
+  String? courseSummary;
+  String? courseLink;
+  bool? status;
 
   Course({
     this.courseName,
@@ -159,11 +159,11 @@ class Course {
 }
 
 class Education {
-  String universityName;
-  DateTime startDate;
-  DateTime endDate;
-  String courseTaken;
-  String collegeLink;
+  String? universityName;
+  DateTime? startDate;
+  DateTime? endDate;
+  String? courseTaken;
+  String? collegeLink;
 
   Education({
     this.universityName,
@@ -191,10 +191,10 @@ class Education {
 }
 
 class Reference {
-  String name;
-  String designation;
-  String company;
-  String email;
+  String? name;
+  String? designation;
+  String? company;
+  String? email;
 
   Reference({
     this.name,
@@ -219,8 +219,8 @@ class Reference {
 }
 
 class Language {
-  String name;
-  String level;
+  String? name;
+  String? level;
 
   Language({
     this.name,
@@ -239,16 +239,16 @@ class Language {
 }
 
 class Resume {
-  Profile profile;
-  Contact contact;
-  List<Experience> experiences;
-  List<Project> projects;
-  List<Education> educations;
-  List<String> skills;
-  List<Language> languages;
-  List<Reference> references;
-  List<Course> courses;
-  String profileSummary;
+  Profile? profile;
+  Contact? contact;
+  List<Experience>? experiences;
+  List<Project>? projects;
+  List<Education>? educations;
+  List<String>? skills;
+  List<Language>? languages;
+  List<Reference>? references;
+  List<Course>? courses;
+  String? profileSummary;
 
   Resume({
     this.profile,

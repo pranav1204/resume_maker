@@ -14,7 +14,6 @@ import 'package:resumepad/screen/resume_maker/widget/previous_page_button.dart';
 import 'package:resumepad/screen/resume_maker/widget/user_name_widget.dart';
 import 'package:resumepad/screen/resume_maker/widget/user_picture_widget.dart';
 import 'package:resumepad/screen/resume_maker/widget/next_page_button.dart';
-import 'package:resumepad/utility/constants.dart';
 
 import 'bloc/bloc_provider.dart';
 import 'bloc/resume_maker_bloc.dart';
@@ -27,9 +26,9 @@ class ResumeMakerPage extends StatefulWidget {
 }
 
 class _ResumeMakerPageState extends State<ResumeMakerPage> with TickerProviderStateMixin {
-  AnimationController _animationController;
-  ResumeMakerBloc _bloc;
-  PageController _pageController;
+  late AnimationController _animationController;
+  late ResumeMakerBloc _bloc;
+  late PageController _pageController;
 
   Future _navigateToPage(int page) async {
     _pageController.animateToPage(page, duration: Duration(milliseconds: _submitAnimationTime), curve: Curves.linear);
@@ -82,7 +81,7 @@ class _ResumeMakerPageState extends State<ResumeMakerPage> with TickerProviderSt
                       top: 36,
                       child: DotsIndicator(
                         dotsCount: 10,
-                        position: snapshot.hasData ? snapshot.data : 0,
+                        position: snapshot.hasData ? snapshot.data!.toInt() : 0,
                       ),
                     );
                   })
@@ -97,7 +96,7 @@ class _ResumeMakerPageState extends State<ResumeMakerPage> with TickerProviderSt
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification notification) {
         if (notification is ScrollUpdateNotification) {
-          _bloc.mainPagerSink.add(_pageController.page);
+          _bloc.mainPagerSink.add(_pageController.page!.toDouble());
         }
         return true;
       },

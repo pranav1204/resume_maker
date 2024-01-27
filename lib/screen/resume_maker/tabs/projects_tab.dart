@@ -41,7 +41,7 @@ class _ProjectTabState extends State<ProjectTab> {
                       child: IconButton(
                         color: Colors.white,
                         padding: EdgeInsets.all(4),
-                        onPressed: () => _showAddProjectDialog(null, 0),
+                        onPressed: () => _showAddProjectDialog(Project(), 0),
                         icon: const Icon(Icons.add),
                       )),
                 ),
@@ -82,7 +82,7 @@ class _ProjectTabState extends State<ProjectTab> {
   }
 
   Future _showAddProjectDialog(Project tempProject, int index) async {
-    Project project = await Navigator.of(context).push(
+    Project? project = await Navigator.of(context).push(
       MaterialPageRoute<Project>(
           builder: (BuildContext context) {
             return AddProjectDialog(
@@ -108,11 +108,11 @@ class _ProjectTabState extends State<ProjectTab> {
 
 class _ProjectCard extends StatelessWidget {
   final Project project;
-  final Function onTap;
+  final VoidCallback onTap;
 
   _ProjectCard({
-    @required this.project,
-    @required this.onTap,
+    required this.project,
+    required this.onTap,
   });
 
   @override
@@ -159,7 +159,7 @@ class _ProjectCard extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  project != null ? project.projectSummary : '',
+                  project != null ? project.projectSummary as String : '',
                   style: TextStyle(
                       color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                       fontSize: MediaQuery.of(context).size.shortestSide * 0.04,
@@ -174,7 +174,7 @@ class _ProjectCard extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(
-                      '${DateFormat.yMMM().format(project.startDate)} - ',
+                      '${DateFormat.yMMM().format(project.startDate as DateTime)} - ',
                       style: TextStyle(
                           color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                           fontSize: MediaQuery.of(context).size.shortestSide * 0.03,
@@ -183,7 +183,7 @@ class _ProjectCard extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                     Text(
-	                    project.endDate.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(project.endDate),
+	                    project.endDate!.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(project.endDate as DateTime),
                       style: TextStyle(
                           color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                           fontSize: MediaQuery.of(context).size.shortestSide * 0.03,

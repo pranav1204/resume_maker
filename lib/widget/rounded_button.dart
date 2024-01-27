@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../utility/color_utility.dart';
+
 class RoundedButton extends StatelessWidget {
-  final Function onPressed;
+  final VoidCallback onPressed;
   final String text;
   final bool isClickable;
 
-  RoundedButton({@required this.onPressed, @required this.text, this.isClickable = true});
+  RoundedButton({required this.onPressed, required this.text, this.isClickable = true});
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +16,19 @@ class RoundedButton extends StatelessWidget {
       child: Container(
         height: MediaQuery.of(context).size.shortestSide * 0.125,
         width: double.infinity,
-        child: RaisedButton(
-          shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(MediaQuery.of(context).size.shortestSide * 0.15)),
-          padding: EdgeInsets.all(8.0),
-          color: isClickable ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
+        child: ElevatedButton(
+          style: ButtonStyle(
+
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(MediaQuery.of(context).size.shortestSide * 0.15)),
+              ),
+            ),
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.all(8)),
+            backgroundColor: isClickable ? MaterialStateProperty.all<Color>(PRIMARY_COLOR as Color) : MaterialStateProperty.all<Color>(DISABLED_GREY as Color),
+          ),
+
+
           child: isClickable
               ? Text(text,
                   style: TextStyle(color: Colors.white, fontSize: MediaQuery.of(context).size.shortestSide * 0.04))

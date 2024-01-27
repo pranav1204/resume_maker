@@ -60,7 +60,7 @@ class _SkillTabState extends State<SkillTab> {
                             icon: StreamBuilder<bool>(
                               stream: _bloc.skillIconStream,
                               builder: (context, snapshot) {
-                              	IconData iconDate = snapshot.hasData ? snapshot.data ? Icons.done: Icons.add: Icons.add;
+                              	IconData iconDate = snapshot.hasData ? snapshot.data !? Icons.done: Icons.add: Icons.add;
                                 return Icon(iconDate);
                               }
                             ),
@@ -75,7 +75,13 @@ class _SkillTabState extends State<SkillTab> {
                   controller: _skillController,
                   hintText: 'Add Skill ...',
                   helperText: 'Your skill',
-                  validator: (val) => val.length == 0 ? 'Empty skill' : null,
+                  validator: (val) => val!.length == 0 ? 'Empty skill' : null,
+                  textInputType: TextInputType.text,
+                  maxLines: 10,
+                  inputBorder: InputBorder.none,
+                  inputFormatter: [],
+                  maxLength: 10,
+                  readOnly: false,
                 ),
               ),
               _buildSkillsList(),
@@ -105,7 +111,7 @@ class _SkillTabState extends State<SkillTab> {
   }
 
   _buildSkillList(List<String> skillList) {
-    List<Widget> skills = List();
+    List skills = List as List;
     skillList.forEach((item) {
       skills.add(Container(
         margin: EdgeInsets.only(right: 12.0, bottom: 4),
@@ -134,8 +140,8 @@ class _SkillTabState extends State<SkillTab> {
 
   void _addSkills() async {
     FocusScope.of(context).requestFocus(new FocusNode());
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       final _bloc = ResumeMakerBlocProvider.of(context);
       _bloc.skillList.add(_skillController.text);
       _bloc.skillListModifiedSink.add(_skillController.text);

@@ -10,10 +10,11 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
-  TextEditingController _nameController;
-  TextEditingController _designationController;
-  TextEditingController _cityController;
+  late TextEditingController _nameController;
+  late TextEditingController _designationController;
+  late TextEditingController _cityController;
   final _formKey = GlobalKey<FormState>();
+
 
   @override
   void initState() {
@@ -27,9 +28,9 @@ class _ProfileTabState extends State<ProfileTab> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final _bloc = ResumeMakerBlocProvider.of(context);
-    _nameController.text = _bloc.profile != null ? _bloc.profile.name : '';
-    _designationController.text = _bloc.profile != null ? _bloc.profile.designation : '';
-    _cityController.text = _bloc.profile != null ? _bloc.profile.currentCityAndCountry : '';
+    _nameController.text = (_bloc.profile != null ? _bloc.profile.name : '')!;
+    _designationController.text = (_bloc.profile != null ? _bloc.profile.designation : '')!;
+    _cityController.text = (_bloc.profile != null ? _bloc.profile.currentCityAndCountry : '')!;
     _nameController..addListener(_onNameChange);
     _designationController..addListener(_onDesignationChange);
     _cityController..addListener(_onCityChange);
@@ -91,7 +92,13 @@ class _ProfileTabState extends State<ProfileTab> {
                   controller: _nameController,
                   hintText: 'What is your name?',
                   helperText: 'Your name',
-                  validator: (val) => val.length == 0 ? 'Empty name' : val.length < 2 ? 'Invalid name' : null,
+                  validator: (val) => val!.length == 0 ? 'Empty name' : val.length < 2 ? 'Invalid name' : null,
+                  textInputType: TextInputType.url,
+                  maxLines: 10,
+                  inputBorder: InputBorder.none,
+                  inputFormatter: [],
+                  maxLength: 10,
+                  readOnly: false,
                 ),
               ),
               Padding(
@@ -101,7 +108,13 @@ class _ProfileTabState extends State<ProfileTab> {
                   hintText: 'What is your designation?',
                   helperText: 'Your designation',
                   validator: (val) =>
-                      val.length == 0 ? 'Empty designation' : val.length < 2 ? 'Invalid designation' : null,
+                      val!.length == 0 ? 'Empty designation' : val.length < 2 ? 'Invalid designation' : null,
+                  textInputType: TextInputType.url,
+                  maxLines: 10,
+                  inputBorder: InputBorder.none,
+                  inputFormatter: [],
+                  maxLength: 10,
+                  readOnly: false,
                 ),
               ),
               Padding(
@@ -110,7 +123,13 @@ class _ProfileTabState extends State<ProfileTab> {
                   controller: _cityController,
                   hintText: 'City, Country (eg: Madrid, Spain)',
                   helperText: 'Your residing city',
-                  validator: (val) => val.length == 0 ? 'Invalid' : null,
+                  validator: (val) => val!.length == 0 ? 'Invalid' : null,
+                  textInputType: TextInputType.url,
+                  maxLines: 10,
+                  inputBorder: InputBorder.none,
+                  inputFormatter: [],
+                  maxLength: 10,
+                  readOnly: false,
                 ),
               ),
               SizedBox(
@@ -119,10 +138,10 @@ class _ProfileTabState extends State<ProfileTab> {
               StreamBuilder<bool>(
                   stream: _bloc.saveProfileButtonEnableStream,
                   builder: (context, snapshot) {
-                    bool isEnable = snapshot.hasData ? snapshot.data : false;
+                    bool? isEnable = snapshot.hasData ? snapshot.data : false;
                     return RoundedButton(
                       text: 'Save',
-                      onPressed: isEnable ? _onAddProfile : null,
+                      onPressed: _onAddProfile,
                     );
                   }),
             ],
@@ -135,11 +154,8 @@ class _ProfileTabState extends State<ProfileTab> {
   void _onAddProfile() {
     FocusScope.of(context).requestFocus(new FocusNode());
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (_bloc.userImage == null) {
-      return;
-    }
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _bloc.profile = Profile(
         name: _nameController.text,
         designation: _designationController.text,

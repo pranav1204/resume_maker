@@ -10,18 +10,18 @@ import 'bloc/bloc_provider.dart';
 class AddEducationDialog extends StatefulWidget {
   final Education education;
 
-  AddEducationDialog({this.education});
+  AddEducationDialog({required this.education});
 
   @override
   _AddEducationDialogState createState() => _AddEducationDialogState();
 }
 
 class _AddEducationDialogState extends State<AddEducationDialog> {
-  TextEditingController _universityController;
-  TextEditingController _courseController;
-  TextEditingController _linkController;
+  late TextEditingController _universityController;
+  late TextEditingController _courseController;
+  late TextEditingController _linkController;
   final _formKey = GlobalKey<FormState>();
-  AddEducationBloc _bloc;
+  late AddEducationBloc _bloc;
 
   @override
   void initState() {
@@ -31,8 +31,8 @@ class _AddEducationDialogState extends State<AddEducationDialog> {
     _courseController = TextEditingController(text: widget.education != null ? widget.education.courseTaken: '');
     _linkController = TextEditingController(text: widget.education != null ? widget.education.collegeLink: '');
 
-    _bloc.startDate = widget.education != null ? widget.education.startDate: DateTime.now();
-    _bloc.endDate = widget.education != null ? widget.education.endDate: DateTime.now();
+    _bloc.startDate = (widget.education != null ? widget.education.startDate: DateTime.now())!;
+    _bloc.endDate = (widget.education != null ? widget.education.endDate: DateTime.now())!;
   }
 
   @override
@@ -77,10 +77,22 @@ class _AddEducationDialogState extends State<AddEducationDialog> {
                 controller: _universityController,
                 hintText: 'Name of university ...',
                 helperText: 'Your university',
-                validator: (val) => val.length == 0 ? 'Empty name' : val.length < 2 ? 'Invalid name' : null,
+                validator: (val) => val!.length == 0 ? 'Empty name' : val.length < 2 ? 'Invalid name' : null,
+                textInputType: TextInputType.text,
+                maxLines: 2,
+                inputBorder: InputBorder.none,
+                inputFormatter: [],
+                maxLength: 10,
+                readOnly: false,
               ),
               SizedBox(height: 12.0),
               CustomTextFieldForm(
+                textInputType: TextInputType.text,
+                maxLines: 2,
+                inputBorder: InputBorder.none,
+                inputFormatter: [],
+                maxLength: 10,
+                readOnly: false,
                 controller: _linkController,
                 hintText: 'University website',
                 helperText: 'University link',
@@ -91,7 +103,13 @@ class _AddEducationDialogState extends State<AddEducationDialog> {
                 controller: _courseController,
                 hintText: 'What course you took?',
                 helperText: 'Your course',
-                validator: (val) => val.length == 0 ? 'Empty course' : null,
+                validator: (val) => val!.length == 0 ? 'Empty course' : null,
+                textInputType: TextInputType.text,
+                maxLines: 2,
+                inputBorder: InputBorder.none,
+                inputFormatter: [],
+                maxLength: 10,
+                readOnly: false,
               ),
               SizedBox(height: 12.0),
               _DateRow(),
@@ -109,8 +127,8 @@ class _AddEducationDialogState extends State<AddEducationDialog> {
 
   void onAddEducation() {
     FocusScope.of(context).requestFocus(new FocusNode());
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
       if (_bloc.startDate.isAfter(_bloc.endDate)) {
         _bloc.errorSink.add('Invalid date');
@@ -137,7 +155,7 @@ class _DateRow extends StatelessWidget {
     return StreamBuilder<String>(
         stream: _bloc.errorStream,
         builder: (context, errorSnapshot) {
-          String error = errorSnapshot.hasData ? errorSnapshot.data : null;
+          String? error = errorSnapshot.hasData ? errorSnapshot.data : null;
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -147,10 +165,10 @@ class _DateRow extends StatelessWidget {
                 child: StreamBuilder<DateTime>(
                     stream: _bloc.startDateStream,
                     builder: (context, snapshot) {
-                      _bloc.startDate = snapshot.hasData ? snapshot.data : _bloc.startDate;
+                      _bloc.startDate = (snapshot.hasData ? snapshot.data : _bloc.startDate)!;
                       return DatePicker(
                         labelText: 'Start',
-                        errorText: error,
+                        errorText: error as String,
                         dateTime: _bloc.startDate,
                         onChanged: (dateTime) => _bloc.startDateSink.add(dateTime),
                       );
@@ -163,10 +181,10 @@ class _DateRow extends StatelessWidget {
                 child: StreamBuilder<DateTime>(
                     stream: _bloc.endDateStream,
                     builder: (context, snapshot) {
-                      _bloc.endDate = snapshot.hasData ? snapshot.data : _bloc.endDate;
+                      _bloc.endDate = (snapshot.hasData ? snapshot.data : _bloc.endDate)!;
                       return DatePicker(
                         labelText: 'End',
-                        errorText: error,
+                        errorText: error as String,
                         dateTime: _bloc.endDate,
                         onChanged: (dateTime) => _bloc.endDateSink.add(dateTime),
                       );

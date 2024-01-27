@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:resumepad/screen/resume_maker/bloc/bloc_provider.dart';
-import 'package:resumepad/screen/resume_maker/bloc/resume_maker_bloc.dart';
 
 class PreviousPageButton extends StatelessWidget {
   @override
@@ -12,7 +11,7 @@ class PreviousPageButton extends StatelessWidget {
       child: StreamBuilder<double>(
           stream: _bloc.mainPagerStream,
           builder: (BuildContext buildContext, AsyncSnapshot<double> snapshot) {
-            double pageOffset = snapshot.hasData ? snapshot.data : 0.0;
+            double pageOffset = snapshot.hasData ? snapshot.data!.toDouble() : 0.0;
             return Transform.translate(
               offset: Offset(-_getXOffset(pageOffset, MediaQuery.of(context).size.width),
                   _getYOffset(pageOffset, MediaQuery.of(context).size.height)),

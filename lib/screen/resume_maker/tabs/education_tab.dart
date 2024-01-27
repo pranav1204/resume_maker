@@ -41,7 +41,7 @@ class _EducationTabState extends State<EducationTab> {
                       child: IconButton(
                         padding: EdgeInsets.all(4),
                         color: Colors.white,
-                        onPressed: () => _showAddEducationDialog(null, 0),
+                        onPressed: () => _showAddEducationDialog(Education(), 0),
                         icon: const Icon(Icons.add),
                       )),
                 ),
@@ -63,7 +63,7 @@ class _EducationTabState extends State<EducationTab> {
           builder: (context, snapshot) {
             return _bloc.educationList.isEmpty
                 ? Container(
-                    child: Text('No educartion added'),
+                    child: Text('No education added'),
                   )
                 : ListView.builder(
                     itemBuilder: (BuildContext context, int index) {
@@ -82,7 +82,7 @@ class _EducationTabState extends State<EducationTab> {
   }
 
   Future _showAddEducationDialog(Education tempEducation, int index) async {
-    Education education = await Navigator.of(context).push(
+    Education? education = await Navigator.of(context).push(
       MaterialPageRoute<Education>(
           builder: (BuildContext context) {
             return AddEducationDialog(
@@ -108,11 +108,11 @@ class _EducationTabState extends State<EducationTab> {
 
 class _EducationCard extends StatelessWidget {
   final Education education;
-  final Function onTap;
+  final VoidCallback onTap;
 
   _EducationCard({
-    @required this.education,
-    @required this.onTap,
+    required this.education,
+    required this.onTap,
   });
 
   @override
@@ -159,7 +159,7 @@ class _EducationCard extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-	                education != null ? education.universityName: '',
+	                education != null ? education.universityName as String: '',
                   style: TextStyle(
                       color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                       fontSize: MediaQuery.of(context).size.shortestSide * 0.04,
@@ -174,7 +174,7 @@ class _EducationCard extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(
-                      '${DateFormat.yMMM().format(education.startDate)} - ',
+                      '${DateFormat.yMMM().format(education.startDate as DateTime)} - ',
                       style: TextStyle(
                           color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                           fontSize: MediaQuery.of(context).size.shortestSide * 0.03,
@@ -183,7 +183,7 @@ class _EducationCard extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                     Text(
-	                    education.endDate.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(education.endDate),
+	                    education.endDate!.difference(DateTime.now()).inDays == 0 ? 'Present': DateFormat.yMMM().format(education.endDate as DateTime),
                       style: TextStyle(
                           color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                           fontSize: MediaQuery.of(context).size.shortestSide * 0.03,

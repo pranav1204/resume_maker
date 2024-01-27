@@ -6,15 +6,15 @@ class AddExperienceBlocProvider extends InheritedWidget {
   final AddExperienceBloc bloc;
 
   const AddExperienceBlocProvider({
-    Key key,
-    @required this.bloc,
-    Widget child,
-  }) : super(key: key, child: child);
+
+    required this.bloc,
+    required Widget child,
+  }) : super( child: child);
 
   @override
   bool updateShouldNotify(_) => true;
 
   static AddExperienceBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(AddExperienceBlocProvider) as AddExperienceBlocProvider).bloc;
+    return (context.dependOnInheritedWidgetOfExactType<AddExperienceBlocProvider>() as AddExperienceBlocProvider).bloc;
   }
 }

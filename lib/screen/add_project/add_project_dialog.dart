@@ -10,19 +10,19 @@ import 'bloc/add_project_bloc.dart';
 class AddProjectDialog extends StatefulWidget {
   final Project project;
 
-  AddProjectDialog({this.project});
+  AddProjectDialog({required this.project});
 
   @override
   _AddProjectDialogState createState() => _AddProjectDialogState();
 }
 
 class _AddProjectDialogState extends State<AddProjectDialog> {
-  TextEditingController _nameController;
-  TextEditingController _linkController;
-  TextEditingController _summaryController;
+  late TextEditingController _nameController;
+  late TextEditingController _linkController;
+  late TextEditingController _summaryController;
 
   final _formKey = GlobalKey<FormState>();
-  AddProjectBloc _bloc;
+  late AddProjectBloc _bloc;
 
   @override
   void initState() {
@@ -33,8 +33,8 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
     _summaryController = TextEditingController(text: widget.project != null ? widget.project.projectSummary: '');
     _linkController = TextEditingController(text: widget.project != null ? widget.project.projectLink: '');
 
-    _bloc.startDate = widget.project != null ? widget.project.startDate: DateTime.now();
-    _bloc.endDate = widget.project != null ? widget.project.endDate: DateTime.now();
+    _bloc.startDate = (widget.project != null ? widget.project.startDate: DateTime.now())!;
+    _bloc.endDate = (widget.project != null ? widget.project.endDate: DateTime.now())!;
   }
 
   @override
@@ -82,7 +82,13 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
                 controller: _nameController,
                 hintText: 'Name of project ...',
                 helperText: 'Your project',
-                validator: (val) => val.length == 0 ? 'Empty name' : val.length < 2 ? 'Invalid name' : null,
+                validator: (val) => val!.length == 0 ? 'Empty name' : val.length < 2 ? 'Invalid name' : null,
+                textInputType: TextInputType.text,
+                maxLines: 2,
+                inputBorder: InputBorder.none,
+                inputFormatter: [],
+                maxLength: 10,
+                readOnly: false,
               ),
               SizedBox(height: 12.0),
               CustomTextFieldForm(
@@ -90,6 +96,12 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
                 hintText: 'Project website',
                 helperText: 'Project link',
                 validator: null,
+                textInputType: TextInputType.text,
+                maxLines: 2,
+                inputBorder: InputBorder.none,
+                inputFormatter: [],
+                maxLength: 10,
+                readOnly: false,
               ),
               SizedBox(height: 12.0),
               CustomTextFieldForm(
@@ -99,6 +111,10 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
                 validator: null,
                 maxLines: 10,
                 inputBorder: OutlineInputBorder(),
+                textInputType: TextInputType.text,
+                inputFormatter: [],
+                maxLength: 10,
+                readOnly: false,
               ),
               SizedBox(height: 12.0),
               _DateRow(),
@@ -116,8 +132,8 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
 
   void onAddProject() {
     FocusScope.of(context).requestFocus(new FocusNode());
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
       if (_bloc.startDate.isAfter(_bloc.endDate)) {
         _bloc.errorSink.add('Invalid date');
@@ -144,7 +160,7 @@ class _DateRow extends StatelessWidget {
     return StreamBuilder<String>(
         stream: _bloc.errorStream,
         builder: (context, errorSnapshot) {
-          String error = errorSnapshot.hasData ? errorSnapshot.data : null;
+          String? error = errorSnapshot.hasData ? errorSnapshot.data : null;
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -154,10 +170,10 @@ class _DateRow extends StatelessWidget {
                 child: StreamBuilder<DateTime>(
                     stream: _bloc.startDateStream,
                     builder: (context, snapshot) {
-                      _bloc.startDate = snapshot.hasData ? snapshot.data : _bloc.startDate;
+                      _bloc.startDate = (snapshot.hasData ? snapshot.data : _bloc.startDate)!;
                       return DatePicker(
                         labelText: 'Start',
-                        errorText: error,
+                        errorText: error as String,
                         dateTime: _bloc.startDate,
                         onChanged: (dateTime) => _bloc.startDateSink.add(dateTime),
                       );
@@ -170,10 +186,10 @@ class _DateRow extends StatelessWidget {
                 child: StreamBuilder<DateTime>(
                     stream: _bloc.endDateStream,
                     builder: (context, snapshot) {
-                      _bloc.endDate = snapshot.hasData ? snapshot.data : _bloc.endDate;
+                      _bloc.endDate = (snapshot.hasData ? snapshot.data : _bloc.endDate)!;
                       return DatePicker(
                         labelText: 'End',
-                        errorText: error,
+                        errorText: error as String,
                         dateTime: _bloc.endDate,
                         onChanged: (dateTime) => _bloc.endDateSink.add(dateTime),
                       );

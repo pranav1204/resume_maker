@@ -13,7 +13,7 @@ class UserNameWidget extends StatelessWidget {
       child: StreamBuilder<double>(
           stream: _bloc.mainPagerStream,
           builder: (BuildContext buildContext, AsyncSnapshot<double> snapshot) {
-            double pageOffset = snapshot.hasData ? snapshot.data : 0.0;
+            double pageOffset = snapshot.hasData ? snapshot.data!.toDouble() : 0.0;
             return Transform.scale(
               scale: _getScaleOffset(pageOffset),
               child: Opacity(
@@ -23,7 +23,7 @@ class UserNameWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        _bloc.profile != null ? _bloc.profile.name : '',
+                        _bloc.profile != null ? _bloc.profile.name as String : '',
                         style: TextStyle(
                             color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                             fontSize: MediaQuery.of(context).size.shortestSide * 0.06,
@@ -32,7 +32,7 @@ class UserNameWidget extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        _bloc.profile != null ? _bloc.profile.designation : '',
+                        _bloc.profile != null ? _bloc.profile.designation as String : '',
                         style: TextStyle(
                             color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                             fontSize: MediaQuery.of(context).size.shortestSide * 0.04,

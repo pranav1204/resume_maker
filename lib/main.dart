@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:resumepad/screen/on_boarding/on_boarding_page.dart';
-import 'package:resumepad/screen/resume_maker/resume_maker_page.dart';
 
 void main() => run();
 

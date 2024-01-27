@@ -6,15 +6,14 @@ class AddEducationBlocProvider extends InheritedWidget {
   final AddEducationBloc bloc;
 
   const AddEducationBlocProvider({
-    Key key,
-    @required this.bloc,
-    Widget child,
-  }) : super(key: key, child: child);
+    required this.bloc,
+    required Widget child,
+  }) : super(child: child);
 
   @override
   bool updateShouldNotify(_) => true;
 
   static AddEducationBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(AddEducationBlocProvider) as AddEducationBlocProvider).bloc;
+    return (context.dependOnInheritedWidgetOfExactType<AddEducationBlocProvider>() as AddEducationBlocProvider).bloc;
   }
 }

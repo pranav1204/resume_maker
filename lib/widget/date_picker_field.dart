@@ -3,14 +3,13 @@ import 'package:intl/intl.dart';
 
 class DatePicker extends StatelessWidget {
   DatePicker({
-    this.labelText,
-    this.errorText,
-    Key key,
-    DateTime dateTime,
-    @required this.onChanged,
+    required this.labelText,
+    required this.errorText,
+    required DateTime dateTime,
+    required this.onChanged,
   })  : assert(onChanged != null),
         date = dateTime == null ? DateTime.now() : DateTime(dateTime.year, dateTime.month, dateTime.day),
-        super(key: key);
+        super();
 
   final String labelText;
   final String errorText;
@@ -39,7 +38,7 @@ class DatePicker extends StatelessWidget {
   }
 
   Future _showDatePicker(BuildContext context) async {
-    DateTime dateTimePicked = await showDatePicker(
+    DateTime? dateTimePicked = await showDatePicker(
         context: context,
         initialDate: date,
         firstDate: date.subtract(const Duration(days: 20000)),

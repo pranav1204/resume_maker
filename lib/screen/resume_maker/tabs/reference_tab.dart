@@ -40,7 +40,7 @@ class _ReferenceTabState extends State<ReferenceTab> {
                       child: IconButton(
                         padding: EdgeInsets.all(4),
                         color: Colors.white,
-                        onPressed: () => _showAddReferenceDialog(null, 0),
+                        onPressed: () => _showAddReferenceDialog(Reference(), 0),
                         icon: const Icon(Icons.add),
                       )),
                 ),
@@ -83,7 +83,7 @@ class _ReferenceTabState extends State<ReferenceTab> {
   }
 
   Future _showAddReferenceDialog(Reference tempReference, int index) async {
-    Reference reference = await Navigator.of(context).push(
+    Reference? reference = await Navigator.of(context).push(
       MaterialPageRoute<Reference>(
           builder: (BuildContext context) {
             return AddReferenceDialog(
@@ -109,11 +109,11 @@ class _ReferenceTabState extends State<ReferenceTab> {
 
 class _ReferenceCard extends StatelessWidget {
   final Reference reference;
-  final Function onTap;
+  final VoidCallback onTap;
 
   _ReferenceCard({
-    @required this.reference,
-    @required this.onTap,
+    required this.reference,
+    required this.onTap,
   });
 
   @override
@@ -176,7 +176,7 @@ class _ReferenceCard extends StatelessWidget {
                     height: 4,
                   ),
                   Text(
-                    reference != null ? reference.email : '',
+                    reference != null ? reference.email as String : '',
                     style: TextStyle(
                         color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                         fontSize: MediaQuery.of(context).size.shortestSide * 0.04,
