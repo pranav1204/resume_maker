@@ -7,8 +7,8 @@ class DotsIndicator extends StatelessWidget {
 	const DotsIndicator({
 		required this.dotsCount,
 		this.position = 0,
-	})  : assert(dotsCount != null && dotsCount > 0),
-				assert(position != null && position >= 0),
+	})  : assert(dotsCount > 0),
+				assert(position >= 0),
 				assert(
 				position < dotsCount,
 				"Position must be inferior than dotsCount",

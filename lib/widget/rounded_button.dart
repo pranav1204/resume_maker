@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../utility/color_utility.dart';
 
 class RoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -25,7 +24,7 @@ class RoundedButton extends StatelessWidget {
               ),
             ),
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.all(8)),
-            backgroundColor: isClickable ? MaterialStateProperty.all<Color>(PRIMARY_COLOR as Color) : MaterialStateProperty.all<Color>(DISABLED_GREY as Color),
+            backgroundColor: isClickable ? MaterialStateProperty.all<Color>(Colors.blue) : MaterialStateProperty.all<Color>(Colors.blueGrey),
           ),
 
 

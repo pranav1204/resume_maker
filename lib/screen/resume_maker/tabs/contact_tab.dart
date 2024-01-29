@@ -23,43 +23,43 @@ class _ContactTabState extends State<ContactTab> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final _bloc = ResumeMakerBlocProvider.of(context);
-    _emailController.text = (_bloc.contact != null ? _bloc.contact.email : _emailController.text)!;
+    _emailController.text = (_bloc.contact != null ? _bloc.contact?.email : _emailController.text)!;
     _emailController..addListener(_onEmailChange);
 
-    _phoneController.text = (_bloc.contact != null ? _bloc.contact.phone : _phoneController.text)!;
+    _phoneController.text = (_bloc.contact != null ? _bloc.contact?.phone : _phoneController.text)!;
     _phoneController..addListener(_onPhoneChange);
 
-    _linkedController.text = (_bloc.contact != null ? _bloc.contact.linkedin : _linkedController.text)!;
+    _linkedController.text = (_bloc.contact != null ? _bloc.contact?.linkedin : _linkedController.text)!;
     _linkedController..addListener(_onLinkedInChange);
 
-    _codeController.text = (_bloc.contact != null ? _bloc.contact.countryCode : _codeController.text)!;
+    _codeController.text = (_bloc.contact != null ? _bloc.contact?.countryCode : _codeController.text)!;
     _codeController..addListener(_onCodeChnage);
   }
 
   void _onEmailChange() {
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (_bloc.contact != null && _emailController.text != _bloc.contact.email) {
+    if (_bloc.contact != null && _emailController.text != _bloc.contact?.email) {
       _bloc.enableSaveContactButton(true);
     }
   }
 
   void _onPhoneChange() {
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (_bloc.contact != null && _phoneController.text != _bloc.contact.phone) {
+    if (_bloc.contact != null && _phoneController.text != _bloc.contact?.phone) {
       _bloc.enableSaveContactButton(true);
     }
   }
 
   void _onLinkedInChange() {
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (_bloc.contact != null && _linkedController.text != _bloc.contact.linkedin) {
+    if (_bloc.contact != null && _linkedController.text != _bloc.contact?.linkedin) {
       _bloc.enableSaveContactButton(true);
     }
   }
 
   void _onCodeChnage() {
 	  final _bloc = ResumeMakerBlocProvider.of(context);
-	  if (_bloc.contact != null && _codeController.text != _bloc.contact.countryCode) {
+	  if (_bloc.contact != null && _codeController.text != _bloc.contact?.countryCode) {
 		  _bloc.enableSaveContactButton(true);
 	  }
   }
@@ -107,15 +107,16 @@ class _ContactTabState extends State<ContactTab> {
                     else
                       return null;
                   },
-                  maxLines: 10,
+                  maxLines: 2,
                   inputBorder: InputBorder.none,
                   inputFormatter: [],
-                  maxLength: 10,
+                  maxLength: 50,
                   readOnly: false,
                 ),
               ),
               Row(
-                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   InkWell(
                     onTap: _showCountryDialog,
@@ -128,11 +129,11 @@ class _ContactTabState extends State<ContactTab> {
                             controller: _codeController,
                             hintText: '(     )',
                             helperText: 'code',
-                            maxLength: 8,
+                            maxLength: 10,
                             textInputType: TextInputType.phone,
                             readOnly: true,
                             validator: (val) => val!.length == 0 ? 'Code' : null,
-                            maxLines: 10,
+                            maxLines: 1,
                             inputBorder: InputBorder.none,
                             inputFormatter: []
                           ),
@@ -153,7 +154,7 @@ class _ContactTabState extends State<ContactTab> {
                           inputFormatter: [
                             LengthLimitingTextInputFormatter(10),
                           ],
-                        maxLines: 10,
+                        maxLines: 1,
                         inputBorder: InputBorder.none,
                         maxLength: 10,
                         readOnly: false,
@@ -170,10 +171,10 @@ class _ContactTabState extends State<ContactTab> {
                   helperText: 'Your LinkedIn',
                   validator: (val) => val!.length == 0 ? 'Empty link' : null,
                   textInputType: TextInputType.url,
-                  maxLines: 10,
+                  maxLines: 4,
                   inputBorder: InputBorder.none,
                   inputFormatter: [],
-                  maxLength: 10,
+                  maxLength: 1000,
                   readOnly: false,
                 ),
               ),

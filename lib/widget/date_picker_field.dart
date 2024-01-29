@@ -5,14 +5,13 @@ class DatePicker extends StatelessWidget {
   DatePicker({
     required this.labelText,
     required this.errorText,
-    required DateTime dateTime,
+    required DateTime? dateTime,
     required this.onChanged,
-  })  : assert(onChanged != null),
-        date = dateTime == null ? DateTime.now() : DateTime(dateTime.year, dateTime.month, dateTime.day),
+  })  : date = dateTime == null ? DateTime.now() : DateTime(dateTime.year, dateTime.month, dateTime.day),
         super();
 
   final String labelText;
-  final String errorText;
+  final String? errorText;
   final DateTime date;
   final ValueChanged<DateTime> onChanged;
 

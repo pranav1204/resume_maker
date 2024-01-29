@@ -9,16 +9,16 @@ import 'package:rxdart/rxdart.dart';
 class ResumeMakerBloc {
   //String to store navigationId
   int currentPage = NAVIGATE_TO_PROFILE_TAB;
-  List<Education> educationList = List as List<Education>;
-  List<Experience> experienceList = List as List<Experience>;
-  List<Project> projectList = List as List<Project>;
-  List<String> skillList = List as List<String>;
-  List<Reference> referenceList = List as List<Reference>;
-  List<Language> languageList = List as List<Language>;
-  late Profile profile;
-  late File userImage;
-  late String profileSummary;
-  late Contact contact;
+  List<Education> educationList = [];
+  List<Experience> experienceList = [];
+  List<Project> projectList = [];
+  List<String> skillList = [];
+  List<Reference> referenceList = [];
+  List<Language> languageList = [];
+  Profile? profile;
+  File? userImage;
+  String? profileSummary;
+  Contact? contact;
 
   final _mainPagerBehaviorSubject = PublishSubject<double>();
 
@@ -142,7 +142,7 @@ class ResumeMakerBloc {
       case NAVIGATE_TO_PROFILE_TAB:
         {
           currentPage = NAVIGATE_TO_PROFILE_SUMMARY_TAB;
-          profileSummary != null  && profileSummary.isNotEmpty ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
+          profileSummary != null  && profileSummary!.isNotEmpty ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
 
           break;
         }
@@ -163,35 +163,35 @@ class ResumeMakerBloc {
 
       case NAVIGATE_TO_EDUCATION_TAB:
         {
-          experienceList.isNotEmpty ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
+          experienceList != null ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
           currentPage = NAVIGATE_TO_EXPERIENCE_TAB;
           break;
         }
 
       case NAVIGATE_TO_EXPERIENCE_TAB:
         {
-          projectList.isNotEmpty ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
+          projectList != null ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
           currentPage = NAVIGATE_TO_PROJECTS_TAB;
           break;
         }
 
       case NAVIGATE_TO_PROJECTS_TAB:
         {
-          skillList.isNotEmpty ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
+          skillList != null ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
           currentPage = NAVIGATE_TO_SKILLS_TAB;
           break;
         }
 
       case NAVIGATE_TO_SKILLS_TAB:
         {
-          referenceList.isNotEmpty ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
+          referenceList != null ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
           currentPage = NAVIGATE_TO_REFERENCES_TAB;
           break;
         }
 
       case NAVIGATE_TO_REFERENCES_TAB:
         {
-          languageList.isNotEmpty ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
+          languageList != null ? nextButtonEnableSink.add(true) : nextButtonEnableSink.add(false);
           currentPage = NAVIGATE_TO_LANGUAGE_TAB;
           break;
         }

@@ -33,8 +33,8 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
     _summaryController = TextEditingController(text: widget.project != null ? widget.project.projectSummary: '');
     _linkController = TextEditingController(text: widget.project != null ? widget.project.projectLink: '');
 
-    _bloc.startDate = (widget.project != null ? widget.project.startDate: DateTime.now())!;
-    _bloc.endDate = (widget.project != null ? widget.project.endDate: DateTime.now())!;
+    _bloc.startDate = (widget.project != null ? widget.project.startDate: DateTime.now());
+    _bloc.endDate = (widget.project != null ? widget.project.endDate: DateTime.now());
   }
 
   @override
@@ -135,10 +135,10 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      if (_bloc.startDate.isAfter(_bloc.endDate)) {
-        _bloc.errorSink.add('Invalid date');
-        return;
-      }
+      // if (_bloc.startDate!.isAfter(_bloc.endDate)) {
+      //   _bloc.errorSink.add('Invalid date');
+      //   return;
+      // }
 
       Navigator.of(context).pop(
         Project(
@@ -170,10 +170,10 @@ class _DateRow extends StatelessWidget {
                 child: StreamBuilder<DateTime>(
                     stream: _bloc.startDateStream,
                     builder: (context, snapshot) {
-                      _bloc.startDate = (snapshot.hasData ? snapshot.data : _bloc.startDate)!;
+                      _bloc.startDate = (snapshot.hasData ? snapshot.data : _bloc.startDate);
                       return DatePicker(
                         labelText: 'Start',
-                        errorText: error as String,
+                        errorText: error,
                         dateTime: _bloc.startDate,
                         onChanged: (dateTime) => _bloc.startDateSink.add(dateTime),
                       );
@@ -186,10 +186,10 @@ class _DateRow extends StatelessWidget {
                 child: StreamBuilder<DateTime>(
                     stream: _bloc.endDateStream,
                     builder: (context, snapshot) {
-                      _bloc.endDate = (snapshot.hasData ? snapshot.data : _bloc.endDate)!;
+                      _bloc.endDate = (snapshot.hasData ? snapshot.data : _bloc.endDate);
                       return DatePicker(
                         labelText: 'End',
-                        errorText: error as String,
+                        errorText: error,
                         dateTime: _bloc.endDate,
                         onChanged: (dateTime) => _bloc.endDateSink.add(dateTime),
                       );

@@ -62,7 +62,7 @@ class AllDoneTab extends StatelessWidget {
     final _bloc = ResumeMakerBlocProvider.of(context);
     _bloc.previewButtonVisibilitySink.add(false);
     _bloc.createPdf().then((val) {
-      _previewPdfFile(context, _bloc.profile.name as String);
+      _previewPdfFile(context, _bloc.profile?.name as String);
     });
   }
 

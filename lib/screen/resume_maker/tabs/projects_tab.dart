@@ -94,12 +94,8 @@ class _ProjectTabState extends State<ProjectTab> {
 
     if( project != null) {
 	    final _bloc = ResumeMakerBlocProvider.of(context);
-	    if (tempProject != null) {
 		    _bloc.projectList[index] = project;
-	    } else {
-		    _bloc.projectList.add(project);
-	    }
-
+	    
 	    _bloc.projectList.isNotEmpty ? _bloc.nextButtonEnableSink.add(true) : _bloc.nextButtonEnableSink.add(false);
 	    _bloc.projectListModifiedSink.add(project);
     }

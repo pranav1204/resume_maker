@@ -17,9 +17,9 @@ class AddEducationDialog extends StatefulWidget {
 }
 
 class _AddEducationDialogState extends State<AddEducationDialog> {
-  late TextEditingController _universityController;
-  late TextEditingController _courseController;
-  late TextEditingController _linkController;
+  TextEditingController _universityController = TextEditingController();
+  TextEditingController _courseController = TextEditingController();
+  TextEditingController _linkController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late AddEducationBloc _bloc;
 
@@ -31,8 +31,8 @@ class _AddEducationDialogState extends State<AddEducationDialog> {
     _courseController = TextEditingController(text: widget.education != null ? widget.education.courseTaken: '');
     _linkController = TextEditingController(text: widget.education != null ? widget.education.collegeLink: '');
 
-    _bloc.startDate = (widget.education != null ? widget.education.startDate: DateTime.now())!;
-    _bloc.endDate = (widget.education != null ? widget.education.endDate: DateTime.now())!;
+    _bloc.startDate = (widget.education != null ? widget.education.startDate: DateTime.now());
+    _bloc.endDate = (widget.education != null ? widget.education.endDate: DateTime.now());
   }
 
   @override
@@ -130,11 +130,6 @@ class _AddEducationDialogState extends State<AddEducationDialog> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      if (_bloc.startDate.isAfter(_bloc.endDate)) {
-        _bloc.errorSink.add('Invalid date');
-        return;
-      }
-
       Navigator.of(context).pop(
         Education(
           collegeLink: _linkController.text,
@@ -165,10 +160,10 @@ class _DateRow extends StatelessWidget {
                 child: StreamBuilder<DateTime>(
                     stream: _bloc.startDateStream,
                     builder: (context, snapshot) {
-                      _bloc.startDate = (snapshot.hasData ? snapshot.data : _bloc.startDate)!;
+                      _bloc.startDate = (snapshot.hasData ? snapshot.data : _bloc.startDate);
                       return DatePicker(
                         labelText: 'Start',
-                        errorText: error as String,
+                        errorText: error,
                         dateTime: _bloc.startDate,
                         onChanged: (dateTime) => _bloc.startDateSink.add(dateTime),
                       );
@@ -181,10 +176,10 @@ class _DateRow extends StatelessWidget {
                 child: StreamBuilder<DateTime>(
                     stream: _bloc.endDateStream,
                     builder: (context, snapshot) {
-                      _bloc.endDate = (snapshot.hasData ? snapshot.data : _bloc.endDate)!;
+                      _bloc.endDate = (snapshot.hasData ? snapshot.data : _bloc.endDate);
                       return DatePicker(
                         labelText: 'End',
-                        errorText: error as String,
+                        errorText: error,
                         dateTime: _bloc.endDate,
                         onChanged: (dateTime) => _bloc.endDateSink.add(dateTime),
                       );
@@ -194,5 +189,4 @@ class _DateRow extends StatelessWidget {
           );
         });
   }
-
 }

@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:resumepad/screen/on_boarding/on_boarding_page.dart';
 
-void main() => run();
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  run();
+}
 
 Future run() async {
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(MyApp());

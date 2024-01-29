@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 class AddProjectBloc {
-  DateTime endDate = DateTime.now();
-  DateTime startDate = DateTime.now();
+  DateTime? endDate = DateTime.now();
+  DateTime? startDate = DateTime.now();
 
   final _startDateBehaviorSubject = PublishSubject<DateTime>();
   Stream<DateTime> get startDateStream => _startDateBehaviorSubject.stream;

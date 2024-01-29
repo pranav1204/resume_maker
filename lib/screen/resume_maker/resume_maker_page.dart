@@ -14,7 +14,6 @@ import 'package:resumepad/screen/resume_maker/widget/previous_page_button.dart';
 import 'package:resumepad/screen/resume_maker/widget/user_name_widget.dart';
 import 'package:resumepad/screen/resume_maker/widget/user_picture_widget.dart';
 import 'package:resumepad/screen/resume_maker/widget/next_page_button.dart';
-
 import 'bloc/bloc_provider.dart';
 import 'bloc/resume_maker_bloc.dart';
 

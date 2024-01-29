@@ -95,12 +95,8 @@ class _ReferenceTabState extends State<ReferenceTab> {
 
     if(reference != null){
 	    final _bloc = ResumeMakerBlocProvider.of(context);
-	    if (tempReference != null) {
 		    _bloc.referenceList[index] = reference;
-	    } else {
-		    _bloc.referenceList.add(reference);
-	    }
-
+	    
 	    _bloc.referenceList.isNotEmpty ? _bloc.nextButtonEnableSink.add(true) : _bloc.nextButtonEnableSink.add(false);
 	    _bloc.referenceListModifiedSink.add(reference);
     }

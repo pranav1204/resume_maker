@@ -28,9 +28,9 @@ class _ProfileTabState extends State<ProfileTab> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final _bloc = ResumeMakerBlocProvider.of(context);
-    _nameController.text = (_bloc.profile != null ? _bloc.profile.name : '')!;
-    _designationController.text = (_bloc.profile != null ? _bloc.profile.designation : '')!;
-    _cityController.text = (_bloc.profile != null ? _bloc.profile.currentCityAndCountry : '')!;
+    _nameController.text = (_bloc.profile != null ? _bloc.profile?.name : '')!;
+    _designationController.text = (_bloc.profile != null ? _bloc.profile?.designation : '')!;
+    _cityController.text = (_bloc.profile != null ? _bloc.profile?.currentCityAndCountry : '')!;
     _nameController..addListener(_onNameChange);
     _designationController..addListener(_onDesignationChange);
     _cityController..addListener(_onCityChange);
@@ -38,7 +38,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   void _onNameChange() {
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (_bloc.profile != null && _nameController.text != _bloc.profile.name) {
+    if (_bloc.profile != null && _nameController.text != _bloc.profile?.name) {
       _bloc.saveProfileButtonEnableSink.add(true);
       _bloc.nextButtonEnableSink.add(false);
     }
@@ -46,7 +46,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   void _onDesignationChange() {
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (_bloc.profile != null && _designationController.text != _bloc.profile.designation) {
+    if (_bloc.profile != null && _designationController.text != _bloc.profile?.designation) {
       _bloc.saveProfileButtonEnableSink.add(true);
       _bloc.nextButtonEnableSink.add(false);
     }
@@ -54,7 +54,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   void _onCityChange() {
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (_bloc.profile != null && _cityController.text != _bloc.profile.currentCityAndCountry) {
+    if (_bloc.profile != null && _cityController.text != _bloc.profile?.currentCityAndCountry) {
       _bloc.saveProfileButtonEnableSink.add(true);
       _bloc.nextButtonEnableSink.add(false);
     }
@@ -93,11 +93,11 @@ class _ProfileTabState extends State<ProfileTab> {
                   hintText: 'What is your name?',
                   helperText: 'Your name',
                   validator: (val) => val!.length == 0 ? 'Empty name' : val.length < 2 ? 'Invalid name' : null,
-                  textInputType: TextInputType.url,
-                  maxLines: 10,
+                  textInputType: TextInputType.text,
+                  maxLines: 2,
                   inputBorder: InputBorder.none,
                   inputFormatter: [],
-                  maxLength: 10,
+                  maxLength: 50,
                   readOnly: false,
                 ),
               ),
@@ -109,11 +109,11 @@ class _ProfileTabState extends State<ProfileTab> {
                   helperText: 'Your designation',
                   validator: (val) =>
                       val!.length == 0 ? 'Empty designation' : val.length < 2 ? 'Invalid designation' : null,
-                  textInputType: TextInputType.url,
-                  maxLines: 10,
+                  textInputType: TextInputType.text,
+                  maxLines: 2,
                   inputBorder: InputBorder.none,
                   inputFormatter: [],
-                  maxLength: 10,
+                  maxLength: 50,
                   readOnly: false,
                 ),
               ),
@@ -124,11 +124,11 @@ class _ProfileTabState extends State<ProfileTab> {
                   hintText: 'City, Country (eg: Madrid, Spain)',
                   helperText: 'Your residing city',
                   validator: (val) => val!.length == 0 ? 'Invalid' : null,
-                  textInputType: TextInputType.url,
-                  maxLines: 10,
+                  textInputType: TextInputType.text,
+                  maxLines: 2,
                   inputBorder: InputBorder.none,
                   inputFormatter: [],
-                  maxLength: 10,
+                  maxLength: 50,
                   readOnly: false,
                 ),
               ),
@@ -159,7 +159,7 @@ class _ProfileTabState extends State<ProfileTab> {
       _bloc.profile = Profile(
         name: _nameController.text,
         designation: _designationController.text,
-        imagePath: _bloc.userImage.path,
+        imagePath: _bloc.userImage?.path,
         currentCityAndCountry: _cityController.text,
       );
       _bloc.saveProfileButtonEnableSink.add(false);

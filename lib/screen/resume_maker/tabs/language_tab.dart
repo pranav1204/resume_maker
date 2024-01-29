@@ -99,12 +99,8 @@ class _LanguageTabState extends State<LanguageTab> {
 
     if(language != null) {
 	    final _bloc = ResumeMakerBlocProvider.of(context);
-	    if (tempLanguage != null) {
 		    _bloc.languageList[index] = language;
-	    } else {
-		    _bloc.languageList.add(language);
-	    }
-
+	    
 	    _bloc.languageList.isNotEmpty ? _bloc.nextButtonEnableSink.add(true) : _bloc.nextButtonEnableSink.add(false);
 	    _bloc.languageListModifiedSink.add(language);
     }

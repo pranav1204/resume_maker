@@ -95,12 +95,8 @@ class _ExperienceTabState extends State<ExperienceTab> {
     if(experience == null) return;
 
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if (tempExperience != null) {
-      _bloc.experienceList[index] = experience;
-    } else {
-      _bloc.experienceList.add(experience);
-    }
-
+    _bloc.experienceList[index] = experience;
+  
     _bloc.experienceList.isNotEmpty ? _bloc.nextButtonEnableSink.add(true) : _bloc.nextButtonEnableSink.add(false);
     _bloc.experienceListModifiedSink.add(experience);
   }

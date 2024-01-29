@@ -12,6 +12,7 @@ class EducationTab extends StatefulWidget {
 }
 
 class _EducationTabState extends State<EducationTab> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,22 +62,22 @@ class _EducationTabState extends State<EducationTab> {
       child: StreamBuilder<Education>(
           stream: _bloc.educationListModifiedStream,
           builder: (context, snapshot) {
-            return _bloc.educationList.isEmpty
-                ? Container(
-                    child: Text('No education added'),
-                  )
+            return _bloc.educationList.isEmpty ?
+            Container(
+              child: Text('No education added'),
+            )
                 : ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-	                    return _bloc.educationList[index] != null ?  _EducationCard(
-                        education: _bloc.educationList[index],
-                        onTap: () => _showAddEducationDialog(
-                          _bloc.educationList[index],
-                          index,
-                        ),
-                      ): Offstage();
-                    },
-                    itemCount: _bloc.educationList.length,
-                  );
+              itemBuilder: (BuildContext context, int index) {
+                return _bloc.educationList[index] != null ?  _EducationCard(
+                  education: _bloc.educationList[index],
+                  onTap: () => _showAddEducationDialog(
+                    _bloc.educationList[index],
+                    index,
+                  ),
+                ): Offstage();
+              },
+              itemCount: _bloc.educationList.length,
+            );
           }),
     );
   }
@@ -95,12 +96,8 @@ class _EducationTabState extends State<EducationTab> {
     if(education == null) return;
 
     final _bloc = ResumeMakerBlocProvider.of(context);
-    if(tempEducation != null) {
 	    _bloc.educationList[index] = education;
-    } else {
-	    _bloc.educationList.add(education);
-    }
-
+  
     _bloc.educationList.isNotEmpty ? _bloc.nextButtonEnableSink.add(true) : _bloc.nextButtonEnableSink.add(false);
     _bloc.educationListModifiedSink.add(education);
   }
@@ -133,11 +130,11 @@ class _EducationCard extends StatelessWidget {
         _bloc.educationListModifiedSink.add(education);
         _bloc.educationList.isNotEmpty ? _bloc.nextButtonEnableSink.add(true) : _bloc.nextButtonEnableSink.add(false);
       },
-      child: _tapableContent(context),
+      child: _tableContent(context),
     );
   }
 
-  _tapableContent(BuildContext context) => InkWell(
+  _tableContent(BuildContext context) => InkWell(
         onTap: onTap,
         child: Card(
           child: Padding(

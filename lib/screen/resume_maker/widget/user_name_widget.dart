@@ -23,7 +23,7 @@ class UserNameWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        _bloc.profile != null ? _bloc.profile.name as String : '',
+                        _bloc.profile != null ? _bloc.profile?.name as String : '',
                         style: TextStyle(
                             color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                             fontSize: MediaQuery.of(context).size.shortestSide * 0.06,
@@ -32,7 +32,7 @@ class UserNameWidget extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        _bloc.profile != null ? _bloc.profile.designation as String : '',
+                        _bloc.profile != null ? _bloc.profile?.designation as String : '',
                         style: TextStyle(
                             color: Color(getColorHexFromStr(TEXT_COLOR_BLACK)),
                             fontSize: MediaQuery.of(context).size.shortestSide * 0.04,

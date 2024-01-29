@@ -23,7 +23,7 @@ class _ProfileSummaryTabState extends State<ProfileSummaryTab> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final _bloc = ResumeMakerBlocProvider.of(context);
-    _summaryController.text = _bloc.profileSummary != null ? _bloc.profileSummary : '';
+    _summaryController.text = (_bloc.profileSummary != null ? _bloc.profileSummary : '')!;
     _summaryController..addListener(_onSummaryChange);
   }
 

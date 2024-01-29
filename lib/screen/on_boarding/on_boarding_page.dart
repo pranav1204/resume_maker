@@ -10,13 +10,13 @@ class OnBoardingPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
           child: Column(
-        children: <Widget>[
-          buildTitle(context),
-          buildImage(context),
-          buildMessage(context),
-          buildButton(context),
-        ],
-      )),
+          children: <Widget>[
+            buildTitle(context),
+            buildImage(context),
+            buildMessage(context),
+            buildButton(context),
+          ],
+          )),
     );
   }
 

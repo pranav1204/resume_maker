@@ -1,4 +1,3 @@
-import 'package:resumepad/utility/color_utility.dart';
 
 const NAVIGATE_TO_PROFILE_TAB = 0;
 const NAVIGATE_TO_PROFILE_SUMMARY_TAB = 1;
